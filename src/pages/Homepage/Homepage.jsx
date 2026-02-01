@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { data } from "../data/recipes";
-import styles from "./Content.module.scss";
-import Recipe from "./Recipe";
+import { data } from "../../data/recipes";
+import Recipe from "./Components/Recipe/Recipe";
+import styles from "./Homepage.module.scss";
 
 function Content() {
   const recipes = data;
