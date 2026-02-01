@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { data } from "../../data/recipes";
+import Loading from "../../components/Loading/Loading";
 import Recipe from "./Components/Recipe/Recipe";
 import styles from "./Homepage.module.scss";
 
-function Content() {
-  const recipes = data;
+function Homepage() {
+  const [recipes, setRecipes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState("");
 
   function handleInput(e) {
@@ -13,9 +14,11 @@ function Content() {
   }
 
   return (
-    <div className={` flex-fill container`}>
+    <div className={` flex-fill container p-20 d-flex flex-column`}>
       <h1 className="my-30">Découvrez nos nouvelles recettes</h1>
-      <div className={`card d-flex flex-column p-20 ${styles.contentCard}`}>
+      <div
+        className={`card flex-fill d-flex flex-column mb-20 p-20 ${styles.contentCard}`}
+      >
         <div
           className={`my-30 d-flex flex-row justify-content-center align-item-center ${styles.searchBar}`}
         >
@@ -27,17 +30,20 @@ function Content() {
             placeholder="Rechercher"
           />
         </div>
-
-        <div className={styles.grid}>
-          {recipes
-            .filter((r) => r.title.toLowerCase().startsWith(filter))
-            .map((r) => (
-              <Recipe key={r._id} title={r.title} image={r.image} />
-            ))}
-        </div>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className={styles.grid}>
+            {recipes
+              .filter((r) => r.title.toLowerCase().startsWith(filter))
+              .map((r) => (
+                <Recipe key={r._id} title={r.title} image={r.image} />
+              ))}
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-export default Content;
+export default Homepage;
