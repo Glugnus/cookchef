@@ -32,6 +32,12 @@ function Homepage() {
     return () => (cancel = true);
   }, []);
 
+  function updateRecipe(updatedRecipe) {
+    setRecipes(
+      recipes.map((r) => (r._id === updatedRecipe._id ? updatedRecipe : r)),
+    );
+  }
+
   function handleInput(e) {
     const filter = e.target.value;
     setFilter(filter.trim().toLowerCase());
@@ -61,7 +67,11 @@ function Homepage() {
             {recipes
               .filter((r) => r.title.toLowerCase().startsWith(filter))
               .map((r) => (
-                <Recipe key={r._id} title={r.title} image={r.image} />
+                <Recipe
+                  key={r._id}
+                  recipe={r}
+                  toggleLikedRecipe={updateRecipe}
+                />
               ))}
           </div>
         )}
