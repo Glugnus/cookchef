@@ -1,0 +1,61 @@
+import { useContext, useState } from "react";
+import Loading from "../../components/Loading/Loading";
+import { ApiContext } from "../../context/ApiContext";
+import { useFetchData } from "../../hooks/useFetchData";
+import Recipe from "./Components/Recipe/Recipe";
+import Search from "./Components/Search/Search";
+import styles from "./Homepage.module.scss";
+
+function Homepage() {
+  const [filter, setFilter] = useState("");
+  const [page, setPage] = useState(1);
+  const BASE_URL_API = useContext(ApiContext);
+  const [[recipes, setRecipes], isLoading] = useFetchData(BASE_URL_API, page);
+
+  function updateRecipe(updatedRecipe) {
+    setRecipes(
+      recipes.map((r) => (r._id === updatedRecipe._id ? updatedRecipe : r)),
+    );
+  }
+
+  function deleteRecipe(_id) {
+    setRecipes(recipes.filter((r) => r._id !== _id));
+  }
+
+  return (
+    <div className={` flex-fill container p-20 d-flex flex-column`}>
+      <h1 className="my-30">
+        Découvrez nos nouvelles recettes{" "}
+        <small className={styles.small}> - {recipes.length}</small>
+      </h1>
+      <div
+        className={`card flex-fill d-flex flex-column mb-20 p-20 ${styles.contentCard}`}
+      >
+        <Search setFilter={setFilter} />
+        {isLoading && !recipes.length ? (
+          <Loading />
+        ) : (
+          <div className={styles.grid}>
+            {recipes
+              .filter((r) => r.title.toLowerCase().startsWith(filter))
+              .map((r) => (
+                <Recipe
+                  key={r._id}
+                  recipe={r}
+                  deleteRecipe={deleteRecipe}
+                  toggleLikedRecipe={updateRecipe}
+                />
+              ))}
+          </div>
+        )}
+        <div className="d-flex flex-row justify-content-center align-items-center p-20">
+          <button onClick={() => setPage(page + 1)} className="btn btn-primary">
+            Charger plus de recettes
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Homepage;
