@@ -3,16 +3,26 @@ import cookchef from "../../assets/images/cookchef.png";
 import styles from "./Header.module.scss";
 import HeaderMenu from "./components/HeaderMenu/HeaderMenu";
 
-function Header() {
+function Header({ setPage }) {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
     <header className={`${styles.header} d-flex flex-row align-items-center `}>
       <div className="flex-fill">
-        <img src={cookchef} alt="logo cookchef" />
+        <img
+          onClick={() => setPage("homepage")}
+          src={cookchef}
+          alt="logo cookchef"
+        />
       </div>
       <ul className={styles.headerList}>
-        <button className="mr-5 btn btn-reverse-primary">
+        <button
+          onClick={() => setPage("admin")}
+          className="mr-15 btn btn-primary"
+        >
+          Ajouter une recette
+        </button>
+        <button className="mr-15 btn btn-reverse-primary">
           <i class="fa-solid fa-heart mr5"></i>
           <span>Wishlist</span>
         </button>
@@ -25,7 +35,7 @@ function Header() {
       {showMenu && (
         <>
           <div onClick={() => setShowMenu(false)} className="calc"></div>
-          <HeaderMenu />
+          <HeaderMenu setPage={setPage} />
         </>
       )}
     </header>
