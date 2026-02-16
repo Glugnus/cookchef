@@ -49,10 +49,13 @@ function RecipeForm() {
       if (response.ok) {
         reset(defaultValues);
       } else {
-        setError("generic", { type: "generic", message: "Il y a une erreur" });
+        setError("generic", {
+          type: "generic",
+          message: "Il y a eu une erreur",
+        });
       }
     } catch (e) {
-      setError("generic", { type: "generic", message: "Il y a une erreur" });
+      setError("generic", { type: "generic", message: "Il y a eu une erreur" });
     }
   }
 
