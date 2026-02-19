@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import Loading from "../../components/Loading/Loading";
 import { ApiContext } from "../../context/ApiContext";
-import { useFetchData } from "../../hooks/useFetchData";
+import { useFetchRecipes } from "../../hooks/useFetchRecipes";
 import Recipe from "./Components/Recipe/Recipe";
 import Search from "./Components/Search/Search";
 import styles from "./Homepage.module.scss";
@@ -10,7 +10,7 @@ function Homepage() {
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(1);
   const BASE_URL_API = useContext(ApiContext);
-  const [[recipes, setRecipes], isLoading] = useFetchData(BASE_URL_API, page);
+  const [[recipes, setRecipes], isLoading] = useFetchRecipes(page);
 
   async function updateRecipe(updatedRecipe) {
     try {
