@@ -1,7 +1,4 @@
-import { useContext } from "react";
-import { ApiContext } from "../context/ApiContext";
-
-const RECIPE_API = useContext(ApiContext);
+const RECIPE_API = "https://restapi.fr/api/recipes";
 
 export async function getRecipes(queryParam) {
   const response = await fetch(

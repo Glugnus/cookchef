@@ -16,7 +16,7 @@ function Header() {
       </div>
       <ul className={styles.headerList}>
         <NavLink to="/admin">
-          <button className="mr-15 btn btn-primary">Ajouter une recette</button>
+          <button className="mr-15 btn btn-primary">Admin</button>
         </NavLink>
 
         <button className="mr-15 btn btn-reverse-primary">

@@ -2,10 +2,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { ApiContext } from "../../../context/ApiContext";
-import styles from "./RecipeForm.module.scss";
+import { ApiContext } from "../../../../../../context/ApiContext";
+import styles from "./AdminRecipesForm.module.scss";
 
-function RecipeForm() {
+function AdminRecipesForm() {
   const BASE_URL = useContext(ApiContext);
 
   const defaultValues = {
@@ -85,4 +85,4 @@ function RecipeForm() {
   );
 }
 
-export default RecipeForm;
+export default AdminRecipesForm;
