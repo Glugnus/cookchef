@@ -1,6 +1,6 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { deleteRecipe as deleteR, updateRecipe as updateR } from "../../apis";
 import Loading from "../../components/Loading/Loading";
-import { ApiContext } from "../../context/ApiContext";
 import { useFetchRecipes } from "../../hooks/useFetchRecipes";
 import Recipe from "./Components/Recipe/Recipe";
 import Search from "./Components/Search/Search";
@@ -9,42 +9,18 @@ import styles from "./Homepage.module.scss";
 function Homepage() {
   const [filter, setFilter] = useState("");
   const [page, setPage] = useState(1);
-  const BASE_URL_API = useContext(ApiContext);
   const [[recipes, setRecipes], isLoading] = useFetchRecipes(page);
 
   async function updateRecipe(updatedRecipe) {
-    try {
-      const { _id, ...restRecipe } = updatedRecipe;
-      const response = await fetch(`${BASE_URL_API}/${_id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(restRecipe),
-      });
-      if (response.ok) {
-        const updatedRecipe = await response.json();
-        setRecipes(
-          recipes.map((r) => (r._id === updatedRecipe._id ? updatedRecipe : r)),
-        );
-      }
-    } catch (e) {
-      console.log("Erreur : ", e);
-    }
+    const savedRecipe = await updateR(updatedRecipe);
+    setRecipes(
+      recipes.map((r) => (r._id === savedRecipe._id ? savedRecipe : r)),
+    );
   }
 
   async function deleteRecipe(_id) {
-    try {
-      const response = await fetch(`${BASE_URL_API}/${_id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        deleteRecipe(_id);
-        setRecipes(recipes.filter((r) => r._id !== _id));
-      }
-    } catch (e) {
-      console.log("Erreur : ", e);
-    }
+    await deleteR(_id);
+    setRecipes(recipes.filter((r) => r._id !== _id));
   }
 
   return (
