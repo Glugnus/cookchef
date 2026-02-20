@@ -1,6 +1,10 @@
+import type { RecipeI } from "../interfaces";
+
 const RECIPE_API = "https://restapi.fr/api/recipes";
 
-export async function getRecipes(queryParam) {
+export async function getRecipes(
+  queryParam: URLSearchParams,
+): Promise<RecipeI[]> {
   const response = await fetch(
     `${RECIPE_API}${queryParam ? `?${queryParam}` : ""}`,
   );
@@ -11,7 +15,7 @@ export async function getRecipes(queryParam) {
     throw new Error("Error fetch recipes");
   }
 }
-export async function getRecipe(_id) {
+export async function getRecipe(_id: string): Promise<RecipeI> {
   const response = await fetch(`${RECIPE_API}/${_id}`);
   if (response.ok) {
     return response.json();
@@ -19,7 +23,7 @@ export async function getRecipe(_id) {
     throw new Error("Error fetch one recipe");
   }
 }
-export async function deleteRecipe(_id) {
+export async function deleteRecipe(_id: string): Promise<string> {
   const response = await fetch(`${RECIPE_API}/${_id}`, {
     method: "DELETE",
   });
@@ -29,7 +33,9 @@ export async function deleteRecipe(_id) {
     throw new Error("Error delete recipe");
   }
 }
-export async function updateRecipe(updatedRecipe) {
+export async function updateRecipe(
+  updatedRecipe: Partial<RecipeI>,
+): Promise<RecipeI> {
   const { _id, ...restRecipe } = updatedRecipe;
   const response = await fetch(`${RECIPE_API}/${_id}`, {
     method: "PATCH",
@@ -44,7 +50,9 @@ export async function updateRecipe(updatedRecipe) {
     throw new Error("Error update recipe");
   }
 }
-export async function createRecipe(newRecipe) {
+export async function createRecipe(
+  newRecipe: Partial<RecipeI>,
+): Promise<RecipeI> {
   const response = await fetch(RECIPE_API, {
     method: "POST",
     headers: {

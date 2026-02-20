@@ -20,14 +20,14 @@ function Header() {
         </NavLink>
 
         <button className="mr-15 btn btn-reverse-primary">
-          <i class="fa-solid fa-heart mr5"></i>
+          <i className="fa-solid fa-heart mr5"></i>
           <span>Wishlist</span>
         </button>
         <button className="btn btn-primary">connexion</button>
       </ul>
       <i
         onClick={() => setShowMenu(true)}
-        class={`fa-solid fa-bars ${styles.headerXs}`}
+        className={`fa-solid fa-bars ${styles.headerXs}`}
       ></i>
       {showMenu && (
         <>

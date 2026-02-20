@@ -1,6 +1,16 @@
+import type { RecipeI } from "interfaces";
+import type { MouseEvent } from "react";
 import styles from "./Recipe.module.scss";
 
-function Recipe({ recipe, updatedRecipe, deleteRecipe }) {
+function Recipe({
+  recipe,
+  updatedRecipe,
+  deleteRecipe,
+}: {
+  recipe: RecipeI;
+  updatedRecipe: (x: RecipeI) => Promise<void>;
+  deleteRecipe: (x: string) => Promise<void>;
+}) {
   function handleClickLike() {
     updatedRecipe({
       ...recipe,
@@ -8,7 +18,7 @@ function Recipe({ recipe, updatedRecipe, deleteRecipe }) {
     });
   }
 
-  async function handleClickDelete(e) {
+  async function handleClickDelete(e: MouseEvent<HTMLElement>) {
     e.stopPropagation();
     deleteRecipe(recipe._id);
   }
