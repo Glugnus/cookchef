@@ -1,3 +1,4 @@
+import type { RecipeI } from "interfaces";
 import { useState } from "react";
 import { deleteRecipe as deleteR, updateRecipe as updateR } from "../../apis";
 import Loading from "../../components/Loading/Loading";
@@ -11,14 +12,14 @@ function Homepage() {
   const [page, setPage] = useState(1);
   const [[recipes, setRecipes], isLoading] = useFetchRecipes(page);
 
-  async function updateRecipe(updatedRecipe) {
+  async function updateRecipe(updatedRecipe: RecipeI): Promise<void> {
     const savedRecipe = await updateR(updatedRecipe);
     setRecipes(
       recipes.map((r) => (r._id === savedRecipe._id ? savedRecipe : r)),
     );
   }
 
-  async function deleteRecipe(_id) {
+  async function deleteRecipe(_id: string): Promise<void> {
     await deleteR(_id);
     setRecipes(recipes.filter((r) => r._id !== _id));
   }

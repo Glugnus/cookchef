@@ -33,7 +33,9 @@ export async function deleteRecipe(_id: string): Promise<string> {
     throw new Error("Error delete recipe");
   }
 }
-export async function updateRecipe(updatedRecipe: RecipeI): Promise<RecipeI> {
+export async function updateRecipe(
+  updatedRecipe: Partial<RecipeI>,
+): Promise<RecipeI> {
   const { _id, ...restRecipe } = updatedRecipe;
   const response = await fetch(`${RECIPE_API}/${_id}`, {
     method: "PATCH",
@@ -48,7 +50,9 @@ export async function updateRecipe(updatedRecipe: RecipeI): Promise<RecipeI> {
     throw new Error("Error update recipe");
   }
 }
-export async function createRecipe(newRecipe: RecipeI): Promise<RecipeI> {
+export async function createRecipe(
+  newRecipe: Partial<RecipeI>,
+): Promise<RecipeI> {
   const response = await fetch(RECIPE_API, {
     method: "POST",
     headers: {

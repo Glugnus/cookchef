@@ -1,8 +1,9 @@
+import type { RecipeI } from "@/interfaces";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { updateRecipe } from "../../../../../../apis";
+import { createRecipe, updateRecipe } from "../../../../../../apis";
 import styles from "./AdminRecipesForm.module.scss";
 
 function AdminRecipesForm() {
@@ -31,13 +32,14 @@ function AdminRecipesForm() {
     register,
     handleSubmit,
     reset,
+    setError,
     clearErrors,
-  } = useForm({
+  } = useForm<{ image: string; title: string; generic?: string }>({
     defaultValues,
     resolver: yupResolver(recipeSchema),
   });
 
-  async function submit(values) {
+  async function submit(values: Partial<RecipeI>) {
     try {
       clearErrors();
       if (recipe) {

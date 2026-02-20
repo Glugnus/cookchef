@@ -1,7 +1,12 @@
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 import styles from "./Search.module.scss";
 
-function Search({ setFilter }) {
-  function handleInput(e) {
+function Search({
+  setFilter,
+}: {
+  setFilter: Dispatch<SetStateAction<string>>;
+}) {
+  function handleInput(e: ChangeEvent<HTMLInputElement>) {
     const filter = e.target.value;
     setFilter(filter.trim().toLowerCase());
   }

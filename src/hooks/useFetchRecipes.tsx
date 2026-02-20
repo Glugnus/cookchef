@@ -3,7 +3,7 @@ import { getRecipes } from "../apis";
 import type { RecipeI } from "../interfaces";
 
 export function useFetchRecipes(
-  page: number,
+  page?: number,
 ): [
   [RecipeI[], React.Dispatch<React.SetStateAction<RecipeI[]>>],
   boolean,

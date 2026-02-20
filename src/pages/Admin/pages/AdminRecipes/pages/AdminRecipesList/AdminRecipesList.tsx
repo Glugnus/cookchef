@@ -6,7 +6,7 @@ import styles from "./AdminRecipesList.module.scss";
 function AdminRecipesList() {
   const [[recipes, setRecipes]] = useFetchRecipes();
 
-  async function deleteRecipe(_id) {
+  async function deleteRecipe(_id: string) {
     await deleteR(_id);
     setRecipes(recipes.filter((r) => r._id !== _id));
   }
